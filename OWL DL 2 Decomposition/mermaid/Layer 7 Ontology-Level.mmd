@@ -1,0 +1,65 @@
+graph TB
+    subgraph "Legend"
+        L1["A --> B means:<br/>B depends on/uses A"]
+    end
+
+    %% ============================================
+    %% LAYER 0: RDF/RDFS PRIMITIVES
+    %% ============================================
+    subgraph "Layer 0: RDF/RDFS Primitives"
+        A[rdf:type]
+    end
+
+    %% ============================================
+    %% LAYER 1: BASIC OWL CONSTRUCTS
+    %% ============================================
+    subgraph "Layer 1: Basic OWL Constructs"
+        subgraph "Layer 1A: Core Types"
+            AV[owl:Ontology]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 7: ONTOLOGY-LEVEL
+    %% ============================================
+    subgraph "Layer 7: Ontology-Level"
+        BA[owl:imports]
+        BB[owl:versionIRI]
+        BJ[owl:priorVersion]
+        BK[owl:backwardCompatibleWith]
+        BL[owl:incompatibleWith]
+    end
+
+    %% ============================================
+    %% LAYER 0 TO LAYER 1
+    %% ============================================
+    A --> AV
+
+    %% ============================================
+    %% LAYER 1 TO LAYER 7: ONTOLOGY-LEVEL CONSTRUCTS
+    %% ============================================
+    AV --> BA
+    AV --> BB
+    AV --> BJ
+    AV --> BK
+    AV --> BL
+
+    %% ============================================
+    %% COLOR SCHEME - ONTOLOGY-LEVEL (PURPLE TINT)
+    %% ============================================
+    style AV fill:#e6ccff
+    style BA fill:#f0ddff
+    style BB fill:#f0ddff
+    style BJ fill:#f0ddff
+    style BK fill:#f0ddff
+    style BL fill:#f0ddff
+
+    %% ============================================
+    %% COLOR SCHEME - RDF/RDFS PRIMITIVES (LIGHT GRAY)
+    %% ============================================
+    style A fill:#d9d9d9
+
+    %% ============================================
+    %% LEGEND
+    %% ============================================
+    style L1 fill:#fafafa,stroke:#333,stroke-width:2px

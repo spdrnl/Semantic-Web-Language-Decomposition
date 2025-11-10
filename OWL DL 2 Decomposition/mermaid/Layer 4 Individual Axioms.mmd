@@ -1,0 +1,98 @@
+graph TB
+    subgraph "Legend"
+        L1["A --> B means:<br/>B depends on/uses A"]
+    end
+
+    %% ============================================
+    %% LAYER 0: RDF/RDFS PRIMITIVES
+    %% ============================================
+    subgraph "Layer 0: RDF/RDFS Primitives"
+        A[rdf:type]
+    end
+
+    %% ============================================
+    %% LAYER 1: BASIC OWL CONSTRUCTS
+    %% ============================================
+    subgraph "Layer 1: Basic OWL Constructs"
+        subgraph "Layer 1A: Core Types"
+            G[owl:ObjectProperty]
+            H[owl:DatatypeProperty]
+        end
+
+        subgraph "Layer 1D: Individuals"
+            AW[owl:NamedIndividual]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 4: INDIVIDUAL AXIOMS
+    %% ============================================
+    subgraph "Layer 4: Individual Axioms"
+        AN[owl:sameAs]
+        AO[owl:differentFrom]
+        AP[owl:AllDifferent]
+        AZ[owl:NegativePropertyAssertion]
+        BU[owl:distinctMembers]
+    end
+
+    %% ============================================
+    %% LAYER 0 TO LAYER 1
+    %% ============================================
+    A --> G
+    A --> H
+    A --> AW
+
+    %% ============================================
+    %% LAYER 1D: INDIVIDUALS TO LAYER 4
+    %% ============================================
+    AW --> AN
+    AW --> AO
+    AW --> AZ
+    AW --> BU
+
+    %% ============================================
+    %% LAYER 1A: PROPERTIES TO LAYER 4
+    %% ============================================
+    G --> AZ
+    H --> AZ
+
+    %% ============================================
+    %% LAYER 4: INTERNAL INDIVIDUAL AXIOMS DEPENDENCIES
+    %% ============================================
+    AN --> AP
+    AO --> AP
+    AP --> BU
+
+    %% ============================================
+    %% COLOR SCHEME - OBJECT PROPERTIES (GREEN TINT)
+    %% ============================================
+    style G fill:#ccffcc
+
+    %% ============================================
+    %% COLOR SCHEME - DATA PROPERTIES (BLUE TINT)
+    %% ============================================
+    style H fill:#ccccff
+
+    %% ============================================
+    %% COLOR SCHEME - INDIVIDUALS (YELLOW TINT)
+    %% ============================================
+    style AW fill:#ffffcc
+    style AN fill:#ffffe6
+    style AO fill:#ffffe6
+    style AP fill:#ffffe6
+    style BU fill:#ffffe6
+
+    %% ============================================
+    %% COLOR SCHEME - AXIOMS (GRAY TINT)
+    %% ============================================
+    style AZ fill:#f0f0f0
+
+    %% ============================================
+    %% COLOR SCHEME - RDF/RDFS PRIMITIVES (LIGHT GRAY)
+    %% ============================================
+    style A fill:#d9d9d9
+
+    %% ============================================
+    %% LEGEND
+    %% ============================================
+    style L1 fill:#fafafa,stroke:#333,stroke-width:2px

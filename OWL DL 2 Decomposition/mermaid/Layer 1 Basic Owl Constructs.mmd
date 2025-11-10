@@ -1,0 +1,144 @@
+graph TB
+    subgraph "Legend"
+        L1["A --> B means:<br/>B depends on/uses A"]
+    end
+
+    %% ============================================
+    %% LAYER 0: RDF/RDFS PRIMITIVES
+    %% ============================================
+    subgraph "Layer 0: RDF/RDFS Primitives"
+        A[rdf:type]
+        B[rdfs:subClassOf]
+        C[rdfs:domain]
+        D[rdfs:range]
+        E[rdfs:subPropertyOf]
+    end
+
+    %% ============================================
+    %% LAYER 1: BASIC OWL CONSTRUCTS
+    %% ============================================
+    subgraph "Layer 1: Basic OWL Constructs"
+        subgraph "Layer 1A: Core Types"
+            F[owl:Class]
+            G[owl:ObjectProperty]
+            H[owl:DatatypeProperty]
+            AV[owl:Ontology]
+        end
+
+        subgraph "Layer 1B: Top/Bottom Elements"
+            I[owl:Thing]
+            J[owl:Nothing]
+            BF[owl:topObjectProperty]
+            BG[owl:bottomObjectProperty]
+            BH[owl:topDataProperty]
+            BI[owl:bottomDataProperty]
+        end
+
+        subgraph "Layer 1C: Equivalence Relations"
+            K[owl:equivalentClass]
+            L[owl:equivalentProperty]
+        end
+
+        subgraph "Layer 1D: Individuals"
+            AW[owl:NamedIndividual]
+        end
+
+        subgraph "Layer 1E: Axiom Reification"
+            BM[owl:Axiom]
+            BN[owl:annotatedSource]
+            BO[owl:annotatedProperty]
+            BP[owl:annotatedTarget]
+        end
+
+        subgraph "Layer 1F: Data Ranges"
+            BQ[rdfs:Datatype]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 0 TO LAYER 1: BASIC TYPE DECLARATIONS
+    %% ============================================
+    A --> F
+    A --> G
+    A --> H
+    A --> AV
+    A --> AW
+    A --> BM
+    A --> BQ
+    B --> K
+    B --> F
+    E --> L
+    E --> G
+    E --> H
+    C --> F
+    D --> F
+
+    %% ============================================
+    %% LAYER 1A: CORE TYPES TO OTHER LAYER 1 CONSTRUCTS
+    %% ============================================
+    F --> K
+    G --> L
+    H --> L
+    G --> BF
+    G --> BG
+    H --> BH
+    H --> BI
+    H --> BQ
+
+    %% ============================================
+    %% LAYER 1E: AXIOM REIFICATION
+    %% ============================================
+    BM --> BN
+    BM --> BO
+    BM --> BP
+
+    %% ============================================
+    %% COLOR SCHEME - CLASSES (RED TINT)
+    %% ============================================
+    style F fill:#ffcccc
+    style I fill:#ffdddd
+    style J fill:#ffdddd
+    style K fill:#ffeeee
+
+    %% ============================================
+    %% COLOR SCHEME - OBJECT PROPERTIES (GREEN TINT)
+    %% ============================================
+    style G fill:#ccffcc
+    style BF fill:#ddffdd
+    style BG fill:#ddffdd
+
+    %% ============================================
+    %% COLOR SCHEME - DATA PROPERTIES (BLUE TINT)
+    %% ============================================
+    style H fill:#ccccff
+    style BH fill:#ddddff
+    style BI fill:#ddddff
+    style BQ fill:#e6e6ff
+
+    %% ============================================
+    %% COLOR SCHEME - INDIVIDUALS (YELLOW TINT)
+    %% ============================================
+    style AW fill:#ffffcc
+
+    %% ============================================
+    %% COLOR SCHEME - ONTOLOGY-LEVEL (PURPLE TINT)
+    %% ============================================
+    style AV fill:#e6ccff
+    style BM fill:#f0ddff
+    style BN fill:#f5e6ff
+    style BO fill:#f5e6ff
+    style BP fill:#f5e6ff
+
+    %% ============================================
+    %% COLOR SCHEME - RDF/RDFS PRIMITIVES (LIGHT GRAY)
+    %% ============================================
+    style A fill:#d9d9d9
+    style B fill:#d9d9d9
+    style C fill:#d9d9d9
+    style D fill:#d9d9d9
+    style E fill:#d9d9d9
+
+    %% ============================================
+    %% LEGEND
+    %% ============================================
+    style L1 fill:#fafafa,stroke:#333,stroke-width:2px

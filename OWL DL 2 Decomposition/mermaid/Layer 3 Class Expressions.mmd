@@ -1,0 +1,188 @@
+graph TB
+    subgraph "Legend"
+        L1["A --> B means:<br/>B depends on/uses A"]
+    end
+
+    %% ============================================
+    %% LAYER 0: RDF/RDFS PRIMITIVES
+    %% ============================================
+    subgraph "Layer 0: RDF/RDFS Primitives"
+        A[rdf:type]
+    end
+
+    %% ============================================
+    %% LAYER 1: BASIC OWL CONSTRUCTS
+    %% ============================================
+    subgraph "Layer 1: Basic OWL Constructs"
+        subgraph "Layer 1A: Core Types"
+            F[owl:Class]
+            G[owl:ObjectProperty]
+            H[owl:DatatypeProperty]
+        end
+
+        subgraph "Layer 1B: Top/Bottom Elements"
+            I[owl:Thing]
+            J[owl:Nothing]
+        end
+
+        subgraph "Layer 1D: Individuals"
+            AW[owl:NamedIndividual]
+        end
+
+        subgraph "Layer 1F: Data Ranges"
+            BQ[rdfs:Datatype]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 3: CLASS EXPRESSIONS
+    %% ============================================
+    subgraph "Layer 3: Class Expressions"
+        subgraph "Layer 3a: Class Expressions - Boolean"
+            U[owl:complementOf]
+            V[owl:intersectionOf]
+            W[owl:unionOf]
+            AX[owl:oneOf]
+        end
+
+        subgraph "Layer 3b: Class Expressions - Restrictions"
+            X[owl:Restriction]
+            Y[owl:onProperty]
+            Z[owl:allValuesFrom]
+            AA[owl:someValuesFrom]
+            AB[owl:hasValue]
+            AC[owl:cardinality]
+            AD[owl:minCardinality]
+            AE[owl:maxCardinality]
+            AF[owl:qualifiedCardinality]
+            AY[owl:hasSelf]
+            BR[owl:onClass]
+            BS[owl:onDataRange]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 0 TO LAYER 1
+    %% ============================================
+    A --> F
+    A --> G
+    A --> H
+    A --> AW
+    A --> BQ
+
+    %% ============================================
+    %% LAYER 1 TO LAYER 3a: CLASS EXPRESSIONS - BOOLEAN
+    %% ============================================
+    F --> U
+    F --> V
+    F --> W
+    F --> X
+    F --> AX
+
+    %% Layer 1B usage in boolean expressions
+    I --> U
+    I --> V
+    I --> W
+    I --> X
+    I --> AX
+    J --> U
+
+    %% Layer 1D to Layer 3a
+    AW --> AX
+    AW --> AB
+
+    %% ============================================
+    %% LAYER 3a TO LAYER 3b: BOOLEAN EXPRESSIONS TO RESTRICTIONS
+    %% ============================================
+    V --> X
+    W --> X
+
+    %% ============================================
+    %% LAYER 3b: RESTRICTIONS STRUCTURE
+    %% ============================================
+    X --> Y
+    X --> Z
+    X --> AA
+    X --> AB
+    X --> AC
+    X --> AY
+    X --> BR
+    X --> BS
+
+    %% Restrictions reference properties and classes
+    G --> Y
+    H --> Y
+    F --> Z
+    F --> AA
+    F --> BR
+    BQ --> BS
+
+    %% Cardinality restrictions use onProperty
+    Y --> AC
+    Y --> AD
+    Y --> AE
+    Y --> AF
+    Y --> AY
+
+    %% Qualified cardinality dependencies
+    BR --> AF
+    F --> AF
+
+    %% Cardinality relationships
+    AC --> AD
+    AC --> AE
+    AD --> AF
+    AE --> AF
+
+    %% ============================================
+    %% COLOR SCHEME - CLASSES (RED TINT)
+    %% ============================================
+    style F fill:#ffcccc
+    style I fill:#ffdddd
+    style J fill:#ffdddd
+    style U fill:#ffe6e6
+    style V fill:#ffe6e6
+    style W fill:#ffe6e6
+    style AX fill:#ffe6e6
+
+    %% ============================================
+    %% COLOR SCHEME - OBJECT PROPERTIES (GREEN TINT)
+    %% ============================================
+    style G fill:#ccffcc
+
+    %% ============================================
+    %% COLOR SCHEME - DATA PROPERTIES (BLUE TINT)
+    %% ============================================
+    style H fill:#ccccff
+    style BQ fill:#e6e6ff
+
+    %% ============================================
+    %% COLOR SCHEME - INDIVIDUALS (YELLOW TINT)
+    %% ============================================
+    style AW fill:#ffffcc
+
+    %% ============================================
+    %% COLOR SCHEME - RESTRICTIONS (ORANGE TINT)
+    %% ============================================
+    style X fill:#ffe6cc
+    style Y fill:#fff0dd
+    style Z fill:#fff0dd
+    style AA fill:#fff0dd
+    style AB fill:#fff0dd
+    style AC fill:#fff0dd
+    style AD fill:#fff0dd
+    style AE fill:#fff0dd
+    style AF fill:#fff0dd
+    style AY fill:#fff0dd
+    style BR fill:#fff0dd
+    style BS fill:#fff0dd
+
+    %% ============================================
+    %% COLOR SCHEME - RDF/RDFS PRIMITIVES (LIGHT GRAY)
+    %% ============================================
+    style A fill:#d9d9d9
+
+    %% ============================================
+    %% LEGEND
+    %% ============================================
+    style L1 fill:#fafafa,stroke:#333,stroke-width:2px

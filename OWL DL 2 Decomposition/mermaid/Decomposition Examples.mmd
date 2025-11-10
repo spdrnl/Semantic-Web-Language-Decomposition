@@ -1,0 +1,239 @@
+graph TB
+    subgraph "Legend"
+        L1["A --> B means:<br/>B depends on/uses A"]
+    end
+
+    %% ============================================
+    %% LAYER 0: RDF/RDFS PRIMITIVES
+    %% ============================================
+    subgraph "Layer 0: RDF/RDFS Primitives"
+        B[rdfs:subClassOf]
+        C[rdfs:domain]
+        D[rdfs:range]
+    end
+
+    %% ============================================
+    %% LAYER 1: BASIC OWL CONSTRUCTS
+    %% ============================================
+    subgraph "Layer 1: Basic OWL Constructs"
+        subgraph "Layer 1A: Core Types"
+            F[owl:Class]
+        end
+
+        subgraph "Layer 1B: Top/Bottom Elements"
+            I[owl:Thing]
+        end
+
+        subgraph "Layer 1C: Equivalence Relations"
+            K[owl:equivalentClass]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 2: PROPERTY CHARACTERISTICS
+    %% ============================================
+    subgraph "Layer 2: Property Characteristics"
+        subgraph "Layer 2A: Relational Property Characteristics"
+            N[owl:TransitiveProperty]
+            O[owl:SymmetricProperty]
+        end
+
+        subgraph "Layer 2C: Functional Characteristics"
+            P[owl:FunctionalProperty]
+            Q[owl:InverseFunctionalProperty]
+        end
+
+        subgraph "Layer 2D: Inverse"
+            M[owl:inverseOf]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 3: CLASS EXPRESSIONS
+    %% ============================================
+    subgraph "Layer 3: Class Expressions"
+        subgraph "Layer 3a: Class Expressions - Boolean"
+            U[owl:complementOf]
+            W[owl:unionOf]
+        end
+
+        subgraph "Layer 3b: Class Expressions - Restrictions"
+            Y[owl:onProperty]
+            Z[owl:allValuesFrom]
+            AC[owl:cardinality]
+            AY[owl:hasSelf]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 5: ADVANCED CLASS AXIOMS
+    %% ============================================
+    subgraph "Layer 5: Advanced Class Axioms"
+        AG[owl:disjointWith]
+        AH[owl:disjointUnionOf]
+    end
+
+    %% ============================================
+    %% LAYER 6: PROPERTY AXIOMS
+    %% ============================================
+    subgraph "Layer 6: Property Axioms"
+        AJ["owl:propertyChainAxiom<br/>(Property Composition)"]
+    end
+
+    %% ============================================
+    %% LAYER 4: INDIVIDUAL AXIOMS
+    %% ============================================
+    subgraph "Layer 4: Individual Axioms"
+        AO[owl:differentFrom]
+        AP[owl:AllDifferent]
+    end
+
+    %% ============================================
+    %% DECOMPOSITION EXAMPLES
+    %% ============================================
+    subgraph "Decomposition Examples"
+        subgraph "Decomposition: Domain/Range"
+            AQ["owl:domain decomposition:<br/>P rdfs:domain C ≡<br/>⊤ ⊑ ∀P⁻.C"]
+            AR["owl:range decomposition:<br/>P rdfs:range C ≡<br/>⊤ ⊑ ∀P.C"]
+        end
+
+        subgraph "Decomposition: Property Characteristics"
+            AT["owl:FunctionalProperty:<br/>P rdf:type owl:FunctionalProperty ≡<br/>⊤ ⊑ ≤1P.⊤"]
+            AU["owl:InverseFunctionalProperty:<br/>P rdf:type owl:InverseFunctionalProperty ≡<br/>⊤ ⊑ ≤1P⁻.⊤"]
+            BC["owl:TransitiveProperty:<br/>P rdf:type owl:TransitiveProperty ≡<br/>P ∘ P ⊑ P"]
+            BD["owl:SymmetricProperty:<br/>P rdf:type owl:SymmetricProperty ≡<br/>P ≡ P⁻"]
+        end
+
+        subgraph "Decomposition: Class Axioms"
+            AS["owl:disjointUnionOf decomposition:<br/>C owl:disjointUnionOf (C1...Cn) ≡<br/>C ≡ C1 ⊔ ... ⊔ Cn ∧<br/>Ci ⊓ Cj ≡ ⊥ (i≠j)"]
+            BT["owl:AllDifferent:<br/>AllDifferent(a1...an) ≡<br/>ai ≠ aj for all i≠j"]
+        end
+
+        subgraph "Decomposition: Restrictions"
+            BE["owl:hasSelf:<br/>∃P.Self ≡<br/>{x | (x,x) ∈ P}"]
+        end
+    end
+
+    %% ============================================
+    %% DEPENDENCIES TO DECOMPOSITION: DOMAIN
+    %% ============================================
+    C --> AQ
+    Z --> AQ
+    M --> AQ
+    I --> AQ
+
+    %% ============================================
+    %% DEPENDENCIES TO DECOMPOSITION: RANGE
+    %% ============================================
+    D --> AR
+    Z --> AR
+    I --> AR
+
+    %% ============================================
+    %% DEPENDENCIES TO DECOMPOSITION: FUNCTIONAL PROPERTY
+    %% ============================================
+    P --> AT
+    AC --> AT
+
+    %% ============================================
+    %% DEPENDENCIES TO DECOMPOSITION: INVERSE FUNCTIONAL PROPERTY
+    %% ============================================
+    Q --> AU
+    AC --> AU
+    M --> AU
+
+    %% ============================================
+    %% DEPENDENCIES TO DECOMPOSITION: TRANSITIVE PROPERTY
+    %% ============================================
+    N --> BC
+    AJ --> BC
+
+    %% ============================================
+    %% DEPENDENCIES TO DECOMPOSITION: SYMMETRIC PROPERTY
+    %% ============================================
+    O --> BD
+    M --> BD
+
+    %% ============================================
+    %% DEPENDENCIES TO DECOMPOSITION: DISJOINT UNION OF
+    %% ============================================
+    K --> AS
+    W --> AS
+    AG --> AS
+    AH --> AS
+
+    %% ============================================
+    %% DEPENDENCIES TO DECOMPOSITION: ALL DIFFERENT
+    %% ============================================
+    AP --> BT
+    AO --> BT
+
+    %% ============================================
+    %% DEPENDENCIES TO DECOMPOSITION: HAS SELF
+    %% ============================================
+    AY --> BE
+    Y --> BE
+
+    %% ============================================
+    %% COLOR SCHEME - CLASSES (RED TINT)
+    %% ============================================
+    style F fill:#ffcccc
+    style I fill:#ffdddd
+    style K fill:#ffeeee
+    style U fill:#ffe6e6
+    style W fill:#ffe6e6
+
+    %% ============================================
+    %% COLOR SCHEME - OBJECT PROPERTIES (GREEN TINT)
+    %% ============================================
+    style M fill:#e6ffe6
+    style N fill:#e6ffe6
+    style O fill:#e6ffe6
+    style P fill:#e6ffe6
+    style Q fill:#e6ffe6
+
+    %% ============================================
+    %% COLOR SCHEME - RESTRICTIONS (ORANGE TINT)
+    %% ============================================
+    style Y fill:#fff0dd
+    style Z fill:#fff0dd
+    style AC fill:#fff0dd
+    style AY fill:#fff0dd
+
+    %% ============================================
+    %% COLOR SCHEME - INDIVIDUALS (YELLOW TINT)
+    %% ============================================
+    style AO fill:#ffffe6
+    style AP fill:#ffffe6
+
+    %% ============================================
+    %% COLOR SCHEME - AXIOMS (GRAY TINT)
+    %% ============================================
+    style AG fill:#e6e6e6
+    style AH fill:#f0f0f0
+    style AJ fill:#f0f0f0
+
+    %% ============================================
+    %% COLOR SCHEME - RDF/RDFS PRIMITIVES (LIGHT GRAY)
+    %% ============================================
+    style B fill:#d9d9d9
+    style C fill:#d9d9d9
+    style D fill:#d9d9d9
+
+    %% ============================================
+    %% DECOMPOSITION EXAMPLES (CYAN TINT)
+    %% ============================================
+    style AQ fill:#e1f5ff
+    style AR fill:#e1f5ff
+    style AS fill:#e1f5ff
+    style AT fill:#e1f5ff
+    style AU fill:#e1f5ff
+    style BC fill:#e1f5ff
+    style BD fill:#e1f5ff
+    style BE fill:#e1f5ff
+    style BT fill:#e1f5ff
+
+    %% ============================================
+    %% LEGEND
+    %% ============================================
+    style L1 fill:#fafafa,stroke:#333,stroke-width:2px

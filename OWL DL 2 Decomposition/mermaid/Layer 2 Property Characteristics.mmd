@@ -1,0 +1,100 @@
+graph TB
+    subgraph "Legend"
+        L1["A --> B means:<br/>B depends on/uses A"]
+    end
+
+    %% ============================================
+    %% LAYER 0: RDF/RDFS PRIMITIVES
+    %% ============================================
+    subgraph "Layer 0: RDF/RDFS Primitives"
+        A[rdf:type]
+    end
+
+    %% ============================================
+    %% LAYER 1: BASIC OWL CONSTRUCTS
+    %% ============================================
+    subgraph "Layer 1: Basic OWL Constructs"
+        subgraph "Layer 1A: Core Types"
+            G[owl:ObjectProperty]
+            H[owl:DatatypeProperty]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 2: PROPERTY CHARACTERISTICS
+    %% ============================================
+    subgraph "Layer 2: Property Characteristics"
+        subgraph "Layer 2A: Relational Property Characteristics"
+            N[owl:TransitiveProperty]
+            O[owl:SymmetricProperty]
+            R[owl:ReflexiveProperty]
+        end
+
+        subgraph "Layer 2B: Anti-Relational Characteristics"
+            S[owl:IrreflexiveProperty]
+            T[owl:AsymmetricProperty]
+        end
+
+        subgraph "Layer 2C: Functional Characteristics"
+            P[owl:FunctionalProperty]
+            Q[owl:InverseFunctionalProperty]
+        end
+
+        subgraph "Layer 2D: Inverse"
+            M[owl:inverseOf]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 0 TO LAYER 1
+    %% ============================================
+    A --> G
+    A --> H
+
+    %% ============================================
+    %% LAYER 1 TO LAYER 2: PROPERTY CHARACTERISTICS
+    %% ============================================
+    G --> M
+    G --> N
+    G --> O
+    G --> P
+    G --> Q
+    G --> R
+    G --> S
+    G --> T
+    H --> P
+
+    %% ============================================
+    %% LAYER 2: INTERNAL PROPERTY CHARACTERISTIC DEPENDENCIES
+    %% ============================================
+    O --> M
+    T --> S
+    T --> O
+
+    %% ============================================
+    %% COLOR SCHEME - OBJECT PROPERTIES (GREEN TINT)
+    %% ============================================
+    style G fill:#ccffcc
+    style M fill:#e6ffe6
+    style N fill:#e6ffe6
+    style O fill:#e6ffe6
+    style P fill:#e6ffe6
+    style Q fill:#e6ffe6
+    style R fill:#e6ffe6
+    style S fill:#e6ffe6
+    style T fill:#e6ffe6
+
+    %% ============================================
+    %% COLOR SCHEME - DATA PROPERTIES (BLUE TINT)
+    %% ============================================
+    style H fill:#ccccff
+
+    %% ============================================
+    %% COLOR SCHEME - RDF/RDFS PRIMITIVES (LIGHT GRAY)
+    %% ============================================
+    style A fill:#d9d9d9
+
+    %% ============================================
+    %% LEGEND
+    %% ============================================
+    style L1 fill:#fafafa,stroke:#333,stroke-width:2px

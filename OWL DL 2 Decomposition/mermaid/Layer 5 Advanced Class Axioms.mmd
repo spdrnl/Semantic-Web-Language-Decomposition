@@ -1,0 +1,123 @@
+graph TB
+    subgraph "Legend"
+        L1["A --> B means:<br/>B depends on/uses A"]
+    end
+
+    %% ============================================
+    %% LAYER 0: RDF/RDFS PRIMITIVES
+    %% ============================================
+    subgraph "Layer 0: RDF/RDFS Primitives"
+        A[rdf:type]
+        B[rdfs:subClassOf]
+    end
+
+    %% ============================================
+    %% LAYER 1: BASIC OWL CONSTRUCTS
+    %% ============================================
+    subgraph "Layer 1: Basic OWL Constructs"
+        subgraph "Layer 1A: Core Types"
+            F[owl:Class]
+        end
+
+        subgraph "Layer 1B: Top/Bottom Elements"
+            J[owl:Nothing]
+        end
+
+        subgraph "Layer 1C: Equivalence Relations"
+            K[owl:equivalentClass]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 3: CLASS EXPRESSIONS
+    %% ============================================
+    subgraph "Layer 3: Class Expressions"
+        subgraph "Layer 3a: Class Expressions - Boolean"
+            U[owl:complementOf]
+            V[owl:intersectionOf]
+            W[owl:unionOf]
+        end
+    end
+
+    %% ============================================
+    %% LAYER 5: ADVANCED CLASS AXIOMS
+    %% ============================================
+    subgraph "Layer 5: Advanced Class Axioms"
+        AG[owl:disjointWith]
+        AH[owl:disjointUnionOf]
+        AI[owl:AllDisjointClasses]
+        BV[owl:members]
+    end
+
+    %% ============================================
+    %% LAYER 0 TO LAYER 1
+    %% ============================================
+    A --> F
+    B --> K
+    B --> F
+
+    %% ============================================
+    %% LAYER 1 TO LAYER 3
+    %% ============================================
+    F --> U
+    F --> V
+    F --> W
+    J --> U
+
+    %% ============================================
+    %% LAYER 1C: EQUIVALENCE RELATIONS TO LAYER 5
+    %% ============================================
+    K --> AH
+    B --> AH
+    V --> AH
+    U --> AH
+    AG --> AH
+
+    %% ============================================
+    %% LAYER 3 TO LAYER 5: CLASS EXPRESSIONS TO AXIOMS
+    %% ============================================
+    U --> AG
+    V --> AG
+
+    %% ============================================
+    %% LAYER 1A & 0 TO LAYER 5
+    %% ============================================
+    F --> AG
+    B --> AG
+
+    %% ============================================
+    %% LAYER 5: INTERNAL ADVANCED CLASS AXIOMS DEPENDENCIES
+    %% ============================================
+    AG --> AI
+    F --> AI
+    AI --> BV
+    BV --> F
+
+    %% ============================================
+    %% COLOR SCHEME - CLASSES (RED TINT)
+    %% ============================================
+    style F fill:#ffcccc
+    style J fill:#ffdddd
+    style K fill:#ffeeee
+    style U fill:#ffe6e6
+    style V fill:#ffe6e6
+    style W fill:#ffe6e6
+
+    %% ============================================
+    %% COLOR SCHEME - AXIOMS (GRAY TINT)
+    %% ============================================
+    style AG fill:#e6e6e6
+    style AH fill:#f0f0f0
+    style AI fill:#f0f0f0
+    style BV fill:#f5f5f5
+
+    %% ============================================
+    %% COLOR SCHEME - RDF/RDFS PRIMITIVES (LIGHT GRAY)
+    %% ============================================
+    style A fill:#d9d9d9
+    style B fill:#d9d9d9
+
+    %% ============================================
+    %% LEGEND
+    %% ============================================
+    style L1 fill:#fafafa,stroke:#333,stroke-width:2px

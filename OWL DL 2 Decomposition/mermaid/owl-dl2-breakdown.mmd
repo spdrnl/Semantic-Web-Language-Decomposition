@@ -1,0 +1,516 @@
+graph TB
+    subgraph "Legend"
+        L1["A --> B means:<br/>B depends on/uses A"]
+    end
+
+%% ============================================
+%% LAYER 0: RDF/RDFS PRIMITIVES
+%% ============================================
+    subgraph "Layer 0: RDF/RDFS Primitives"
+        A[rdf:type]
+        B[rdfs:subClassOf]
+        C[rdfs:domain]
+        D[rdfs:range]
+        E[rdfs:subPropertyOf]
+    end
+
+%% ============================================
+%% LAYER 1: BASIC OWL CONSTRUCTS
+%% ============================================
+    subgraph "Layer 1: Basic Owl Constructs"
+        subgraph "Layer 1A: Core Types"
+            F[owl:Class]
+            G[owl:ObjectProperty]
+            H[owl:DatatypeProperty]
+            AV[owl:Ontology]
+        end
+
+        subgraph "Layer 1B: Top/Bottom Elements"
+            I[owl:Thing]
+            J[owl:Nothing]
+            BF[owl:topObjectProperty]
+            BG[owl:bottomObjectProperty]
+            BH[owl:topDataProperty]
+            BI[owl:bottomDataProperty]
+        end
+
+        subgraph "Layer 1C: Equivalence Relations"
+            K[owl:equivalentClass]
+            L[owl:equivalentProperty]
+        end
+
+        subgraph "Layer 1D: Individuals"
+            AW[owl:NamedIndividual]
+        end
+
+        subgraph "Layer 1E: Axiom Reification"
+            BM[owl:Axiom]
+            BN[owl:annotatedSource]
+            BO[owl:annotatedProperty]
+            BP[owl:annotatedTarget]
+        end
+
+        subgraph "Layer 1F: Data Ranges"
+            BQ[rdfs:Datatype]
+        end
+    end
+
+%% ============================================
+%% LAYER 2: PROPERTY CHARACTERISTICS
+%% ============================================
+    subgraph "Layer 2: Property Characteristics"
+        subgraph "Layer 2A: Relational Property Characteristics"
+            N[owl:TransitiveProperty]
+            O[owl:SymmetricProperty]
+            R[owl:ReflexiveProperty]
+        end
+
+        subgraph "Layer 2B: Anti-Relational Characteristics"
+            S[owl:IrreflexiveProperty]
+            T[owl:AsymmetricProperty]
+        end
+
+        subgraph "Layer 2C: Functional Characteristics"
+            P[owl:FunctionalProperty]
+            Q[owl:InverseFunctionalProperty]
+        end
+
+        subgraph "Layer 2D: Inverse"
+            M[owl:inverseOf]
+        end
+
+    end
+
+    subgraph "Layer 3: Class Expressions"
+
+    %% ============================================
+    %% LAYER 3a: CLASS EXPRESSIONS - BOOLEAN
+    %% ============================================
+        subgraph "Layer 3a: Class Expressions - Boolean"
+            U[owl:complementOf]
+            V[owl:intersectionOf]
+            W[owl:unionOf]
+            AX[owl:oneOf]
+        end
+
+    %% ============================================
+    %% LAYER 3b: CLASS EXPRESSIONS - RESTRICTIONS
+    %% ============================================
+        subgraph "Layer 3b: Class Expressions - Restrictions"
+            X[owl:Restriction]
+            Y[owl:onProperty]
+            Z[owl:allValuesFrom]
+            AA[owl:someValuesFrom]
+            AB[owl:hasValue]
+            AC[owl:cardinality]
+            AD[owl:minCardinality]
+            AE[owl:maxCardinality]
+            AF[owl:qualifiedCardinality]
+            AY[owl:hasSelf]
+            BR[owl:onClass]
+            BS[owl:onDataRange]
+        end
+    end
+
+%% ============================================
+%% LAYER 4: INDIVIDUAL AXIOMS
+%% ============================================
+    subgraph "Layer 4: Individual Axioms"
+        AN[owl:sameAs]
+        AO[owl:differentFrom]
+        AP[owl:AllDifferent]
+        AZ[owl:NegativePropertyAssertion]
+        BU[owl:distinctMembers]
+    end
+
+%% ============================================
+%% LAYER 5: ADVANCED CLASS AXIOMS
+%% ============================================
+    subgraph "Layer 5: Advanced Class Axioms"
+        AG[owl:disjointWith]
+        AH[owl:disjointUnionOf]
+        AI[owl:AllDisjointClasses]
+        BV[owl:members]
+    end
+
+%% ============================================
+%% LAYER 6: PROPERTY AXIOMS
+%% ============================================
+    subgraph "Layer 6: Property Axioms"
+        AJ["owl:propertyChainAxiom<br/>(Property Composition)"]
+        AK[owl:propertyDisjointWith]
+        AL[owl:AllDisjointProperties]
+        AM["owl:hasKey<br/>(Key Constraint)"]
+    end
+
+%% ============================================
+%% LAYER 7: ONTOLOGY-LEVEL
+%% ============================================
+    subgraph "Layer 7: Ontology-Level"
+        BA[owl:imports]
+        BB[owl:versionIRI]
+        BJ[owl:priorVersion]
+        BK[owl:backwardCompatibleWith]
+        BL[owl:incompatibleWith]
+    end
+
+%% ============================================
+%% DECOMPOSITION EXAMPLES
+%% ============================================
+    subgraph "Decomposition Examples"
+        subgraph "Decomposition: Domain/Range"
+            AQ["owl:domain decomposition:<br/>P rdfs:domain C ≡<br/>⊤ ⊑ ∀P⁻.C"]
+            AR["owl:range decomposition:<br/>P rdfs:range C ≡<br/>⊤ ⊑ ∀P.C"]
+        end
+
+        subgraph "Decomposition: Property Characteristics"
+            AT["owl:FunctionalProperty:<br/>P rdf:type owl:FunctionalProperty ≡<br/>⊤ ⊑ ≤1P.⊤"]
+            AU["owl:InverseFunctionalProperty:<br/>P rdf:type owl:InverseFunctionalProperty ≡<br/>⊤ ⊑ ≤1P⁻.⊤"]
+            BC["owl:TransitiveProperty:<br/>P rdf:type owl:TransitiveProperty ≡<br/>P ∘ P ⊑ P"]
+            BD["owl:SymmetricProperty:<br/>P rdf:type owl:SymmetricProperty ≡<br/>P ≡ P⁻"]
+        end
+
+        subgraph "Decomposition: Class Axioms"
+            AS["owl:disjointUnionOf decomposition:<br/>C owl:disjointUnionOf (C1...Cn) ≡<br/>C ≡ C1 ⊔ ... ⊔ Cn ∧<br/>Ci ⊓ Cj ≡ ⊥ (i≠j)"]
+            BT["owl:AllDifferent:<br/>AllDifferent(a1...an) ≡<br/>ai ≠ aj for all i≠j"]
+        end
+
+        subgraph "Decomposition: Restrictions"
+            BE["owl:hasSelf:<br/>∃P.Self ≡<br/>{x | (x,x) ∈ P}"]
+        end
+    end
+
+%% ============================================
+%% LAYER 0 TO LAYER 1: BASIC TYPE DECLARATIONS
+%% ============================================
+    A --> F
+    A --> G
+    A --> H
+    A --> AV
+    A --> AW
+    A --> BM
+    A --> BQ
+    B --> K
+    B --> F
+    E --> L
+    E --> G
+    E --> H
+    C --> F
+    D --> F
+%% ============================================
+%% LAYER 1A: CORE TYPES TO OTHER LAYER 1 CONSTRUCTS
+%% ============================================
+    F --> K
+    G --> L
+    H --> L
+    G --> BF
+    G --> BG
+    H --> BH
+    H --> BI
+    H --> BQ
+%% ============================================
+%% LAYER 1E: AXIOM REIFICATION
+%% ============================================
+    BM --> BN
+    BM --> BO
+    BM --> BP
+%% ============================================
+%% LAYER 1 TO LAYER 3a: CLASS EXPRESSIONS
+%% ============================================
+    F --> U
+    F --> V
+    F --> W
+    F --> X
+    F --> AX
+%% Layer 1B usage in expressions
+    I --> U
+    I --> V
+    I --> W
+    I --> X
+    I --> AX
+    J --> U
+    J --> AG
+%% ============================================
+%% LAYER 1C: EQUIVALENCE RELATIONS USAGE
+%% ============================================
+    K --> AH
+    B --> AH
+    V --> AH
+    U --> AH
+    AG --> AH
+%% ============================================
+%% LAYER 1D: INDIVIDUALS TO LAYER 3a & 5
+%% ============================================
+    AW --> AX
+    AW --> AN
+    AW --> AO
+    AW --> AZ
+    AW --> AB
+    AW --> BU
+%% ============================================
+%% LAYER 1 TO LAYER 2: PROPERTY CHARACTERISTICS
+%% ============================================
+    G --> M
+    G --> N
+    G --> O
+    G --> P
+    G --> Q
+    G --> R
+    G --> S
+    G --> T
+    H --> P
+%% ============================================
+%% LAYER 2: INTERNAL PROPERTY CHARACTERISTIC DEPENDENCIES
+%% ============================================
+    O --> M
+    T --> S
+    T --> O
+%% ============================================
+%% LAYER 3a TO LAYER 3b: BOOLEAN EXPRESSIONS TO RESTRICTIONS
+%% ============================================
+    V --> X
+    W --> X
+%% ============================================
+%% LAYER 3b: RESTRICTIONS STRUCTURE
+%% ============================================
+    X --> Y
+    X --> Z
+    X --> AA
+    X --> AB
+    X --> AC
+    X --> AY
+    X --> BR
+    X --> BS
+%% Restrictions reference properties and classes
+    G --> Y
+    H --> Y
+    F --> Z
+    F --> AA
+    F --> BR
+    BQ --> BS
+%% Cardinality restrictions use onProperty
+    Y --> AC
+    Y --> AD
+    Y --> AE
+    Y --> AF
+    Y --> AY
+%% Qualified cardinality dependencies
+    BR --> AF
+%% ============================================
+%% LAYER 4: INDIVIDUAL AXIOMS DEPENDENCIES
+%% ============================================
+    AN --> AP
+    AO --> AP
+    AP --> BU
+%% Negative property assertions
+    G --> AZ
+    H --> AZ
+%% ============================================
+%% LAYER 5: ADVANCED CLASS AXIOMS
+%% ============================================
+    B --> AG
+    U --> AG
+    V --> AG
+    F --> AG
+%% AllDisjointClasses
+    AG --> AI
+    F --> AI
+    AI --> BV
+    BV --> F
+%% ============================================
+%% LAYER 6: PROPERTY AXIOMS
+%% ============================================
+
+%% Property chains
+    G --> AJ
+    B --> AJ
+    X --> AJ
+    M --> AJ
+    AJ --> L
+%% Property disjointness
+    M --> AK
+    AG --> AK
+    G --> AK
+    H --> AK
+    L --> AK
+    E --> AK
+%% AllDisjointProperties
+    AK --> AL
+    L --> AL
+    AL --> BV
+%% hasKey
+    G --> AM
+    H --> AM
+    P --> AM
+    Q --> AM
+%% ============================================
+%% LAYER 7: ONTOLOGY-LEVEL CONSTRUCTS
+%% ============================================
+    AV --> BA
+    AV --> BB
+    AV --> BJ
+    AV --> BK
+    AV --> BL
+%% ============================================
+%% DECOMPOSITION: DOMAIN
+%% ============================================
+    C --> AQ
+    Z --> AQ
+    M --> AQ
+    I --> AQ
+%% ============================================
+%% DECOMPOSITION: RANGE
+%% ============================================
+    D --> AR
+    Z --> AR
+    I --> AR
+%% ============================================
+%% DECOMPOSITION: FUNCTIONAL PROPERTY
+%% ============================================
+    P --> AT
+    AC --> AT
+%% ============================================
+%% DECOMPOSITION: INVERSE FUNCTIONAL PROPERTY
+%% ============================================
+    Q --> AU
+    AC --> AU
+    M --> AU
+%% ============================================
+%% DECOMPOSITION: TRANSITIVE PROPERTY
+%% ============================================
+    N --> BC
+    AJ --> BC
+%% ============================================
+%% DECOMPOSITION: SYMMETRIC PROPERTY
+%% ============================================
+    O --> BD
+    M --> BD
+%% ============================================
+%% DECOMPOSITION: DISJOINT UNION OF
+%% ============================================
+    K --> AS
+    W --> AS
+    AG --> AS
+    AH --> AS
+%% ============================================
+%% DECOMPOSITION: ALL DIFFERENT
+%% ============================================
+    AP --> BT
+    AO --> BT
+%% ============================================
+%% DECOMPOSITION: HAS SELF
+%% ============================================
+    AY --> BE
+    Y --> BE
+%% ============================================
+%% CARDINALITY RELATIONSHIPS
+%% ============================================
+    AC --> AD
+    AC --> AE
+    AD --> AF
+    AE --> AF
+    F --> AF
+%% ============================================
+%% COLOR SCHEME - CLASSES (RED TINT)
+%% ============================================
+    style F fill: #ffcccc
+    style I fill: #ffdddd
+    style J fill: #ffdddd
+    style K fill: #ffeeee
+    style U fill: #ffe6e6
+    style V fill: #ffe6e6
+    style W fill: #ffe6e6
+    style AX fill: #ffe6e6
+%% ============================================
+%% COLOR SCHEME - OBJECT PROPERTIES (GREEN TINT)
+%% ============================================
+    style G fill: #ccffcc
+    style BF fill: #ddffdd
+    style BG fill: #ddffdd
+    style M fill: #e6ffe6
+    style N fill: #e6ffe6
+    style O fill: #e6ffe6
+    style P fill: #e6ffe6
+    style Q fill: #e6ffe6
+    style R fill: #e6ffe6
+    style S fill: #e6ffe6
+    style T fill: #e6ffe6
+%% ============================================
+%% COLOR SCHEME - DATA PROPERTIES (BLUE TINT)
+%% ============================================
+    style H fill: #ccccff
+    style BH fill: #ddddff
+    style BI fill: #ddddff
+    style BQ fill: #e6e6ff
+%% ============================================
+%% COLOR SCHEME - INDIVIDUALS (YELLOW TINT)
+%% ============================================
+    style AW fill: #ffffcc
+    style AN fill: #ffffe6
+    style AO fill: #ffffe6
+    style AP fill: #ffffe6
+    style BU fill: #ffffe6
+%% ============================================
+%% COLOR SCHEME - RESTRICTIONS (ORANGE TINT)
+%% ============================================
+    style X fill: #ffe6cc
+    style Y fill: #fff0dd
+    style Z fill: #fff0dd
+    style AA fill: #fff0dd
+    style AB fill: #fff0dd
+    style AC fill: #fff0dd
+    style AD fill: #fff0dd
+    style AE fill: #fff0dd
+    style AF fill: #fff0dd
+    style AY fill: #fff0dd
+    style BR fill: #fff0dd
+    style BS fill: #fff0dd
+%% ============================================
+%% COLOR SCHEME - ONTOLOGY-LEVEL (PURPLE TINT)
+%% ============================================
+    style AV fill: #e6ccff
+    style BA fill: #f0ddff
+    style BB fill: #f0ddff
+    style BJ fill: #f0ddff
+    style BK fill: #f0ddff
+    style BL fill: #f0ddff
+    style BM fill: #f0ddff
+    style BN fill: #f5e6ff
+    style BO fill: #f5e6ff
+    style BP fill: #f5e6ff
+%% ============================================
+%% COLOR SCHEME - AXIOMS (GRAY TINT)
+%% ============================================
+    style AG fill: #e6e6e6
+    style AH fill: #f0f0f0
+    style AI fill: #f0f0f0
+    style AJ fill: #f0f0f0
+    style AK fill: #f0f0f0
+    style AL fill: #f0f0f0
+    style AM fill: #f0f0f0
+    style AZ fill: #f0f0f0
+    style BV fill: #f5f5f5
+%% ============================================
+%% COLOR SCHEME - RDF/RDFS PRIMITIVES (LIGHT GRAY)
+%% ============================================
+    style A fill: #d9d9d9
+    style B fill: #d9d9d9
+    style C fill: #d9d9d9
+    style D fill: #d9d9d9
+    style E fill: #d9d9d9
+%% ============================================
+%% DECOMPOSITION EXAMPLES (CYAN TINT)
+%% ============================================
+    style AQ fill: #e1f5ff
+    style AR fill: #e1f5ff
+    style AS fill: #e1f5ff
+    style AT fill: #e1f5ff
+    style AU fill: #e1f5ff
+    style BC fill: #e1f5ff
+    style BD fill: #e1f5ff
+    style BE fill: #e1f5ff
+    style BT fill: #e1f5ff
+%% ============================================
+%% LEGEND
+%% ============================================
+    style L1 fill: #fafafa, stroke: #333, stroke-width: 2px
